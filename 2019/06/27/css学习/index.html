@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="JeasXie&#39;s Hexo blog">
 <meta property="og:description" content="css是什么？css(Cascading Style Sheets)，层叠样式表，选择器{属性:值；属性：值} 123div &amp;#123;    background: red;&amp;#125;  引用css1.内联样式&amp;lt;a style=&amp;quot;text-decoration: none;&amp;quot;&amp;gt;&amp;lt;a/&amp;gt;&amp;lt;!-- 取消a标签下划线样式--&amp;gt;2.内部样式 1">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-06-27T15:59:52.782Z">
+<meta property="og:updated_time" content="2019-07-22T13:45:36.481Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="css学习记录">
 <meta name="twitter:description" content="css是什么？css(Cascading Style Sheets)，层叠样式表，选择器{属性:值；属性：值} 123div &amp;#123;    background: red;&amp;#125;  引用css1.内联样式&amp;lt;a style=&amp;quot;text-decoration: none;&amp;quot;&amp;gt;&amp;lt;a/&amp;gt;&amp;lt;!-- 取消a标签下划线样式--&amp;gt;2.内部样式 1">
@@ -189,31 +189,27 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">clearfix::after &#123;</span><br><span class="line">    content: &quot;&quot;;</span><br><span class="line">    display: block;</span><br><span class="line">    clear: both;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>div（块级元素）高度由内部文档流元素的高度总和决定。<br>文档流：文档内元素流动的方向。<br>内联元素从左往右流动，宽度不够时另起一行。<br>块级元素占一行，从上往下依次流。<br>块级元素的高度由内部文档流元素的高度总和决定。</p>
-<h1 id="一些居中技巧-转自阮一峰的网络日志"><a href="#一些居中技巧-转自阮一峰的网络日志" class="headerlink" title="一些居中技巧(转自阮一峰的网络日志)"></a>一些居中技巧(转自阮一峰的网络日志)</h1><ol>
-<li>文字的水平居中</li>
+<h1 id="布局方法"><a href="#布局方法" class="headerlink" title="布局方法"></a>布局方法</h1><h2 id="1-左右布局"><a href="#1-左右布局" class="headerlink" title="1.左右布局"></a>1.左右布局</h2><p>使用float和clearfix将需要布局的子元素浮动起来<br>再通过margin确定位置</p>
+<h2 id="左中右布局"><a href="#左中右布局" class="headerlink" title="左中右布局"></a>左中右布局</h2><ol>
+<li>按main、left、right排序，三者都<code>float:left;</code></li>
+<li>中间栏设置<code>width:100%</code>，左右两侧栏设置一定值<code>width</code>(如左200px，右100px)<br>此时中间栏独占一行，把左右两侧栏挤下去了，设置左侧栏<code>margin-left:-100%</code>，将左侧栏拉上来至第一栏处；同理，设置右侧栏<code>margin-left:-100px</code>，将右侧栏拉上来至第三栏处；<br>此时中间栏的头部和尾部分别被左右两栏的覆盖了，所以设置父元素<code>padding：0 100px 0 200px</code>，给左右两栏留出足够的空间，然后再把左右两栏相对定位至留空的地方（<code>position:relative</code>）;<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;content&quot;&gt;</span><br><span class="line">  &lt;div class=&quot;main&quot;&gt;中间自适应&lt;/div&gt;</span><br><span class="line">  &lt;div class=&quot;left&quot;&gt;左边定宽&lt;/div&gt;</span><br><span class="line">  &lt;div class=&quot;right&quot;&gt;右边定宽&lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">.content &#123;</span><br><span class="line">    padding: 0 100px 0 150px;</span><br><span class="line">    overflow: hidden; //用于清除浮动&#125;</span><br><span class="line">  .main &#123;</span><br><span class="line">    float: left;</span><br><span class="line">    width: 100%;</span><br><span class="line">    background: green;</span><br><span class="line">  &#125;</span><br><span class="line">  .left &#123;</span><br><span class="line">    float: left;</span><br><span class="line">    position: relative;</span><br><span class="line">    left: -150px;</span><br><span class="line">    margin-left: -100%;</span><br><span class="line">    width: 150px;</span><br><span class="line">    background: red;</span><br><span class="line">  &#125;</span><br><span class="line">  .right &#123;</span><br><span class="line">    float: left;</span><br><span class="line">    position: relative;</span><br><span class="line">    right: -100px;</span><br><span class="line">    margin-left: -100px;</span><br><span class="line">    width: 100px;</span><br><span class="line">    background: gray;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+</li>
 </ol>
-<p>将一段文字置于容器的水平中点，只要设置text-align属性即可：</p>
+<p>![左中右] (./img/1.png)</p>
+<h1 id="一些居中技巧-转自阮一峰的网络日志"><a href="#一些居中技巧-转自阮一峰的网络日志" class="headerlink" title="一些居中技巧(转自阮一峰的网络日志)"></a>一些居中技巧(转自阮一峰的网络日志)</h1><h2 id="1-文字的水平居中"><a href="#1-文字的水平居中" class="headerlink" title="1. 文字的水平居中"></a>1. 文字的水平居中</h2><p>将一段文字置于容器的水平中点，只要设置text-align属性即可：</p>
 <p>   <code>text-align:center;</code></p>
-<ol start="2">
-<li>容器的水平居中</li>
-</ol>
-<p>先为该容器设置一个明确宽度，然后将margin的<em>水平值</em>设为auto即可。</p>
+<h2 id="2-容器的水平居中"><a href="#2-容器的水平居中" class="headerlink" title="2. 容器的水平居中"></a>2. 容器的水平居中</h2><p>先为该容器设置一个明确宽度，然后将margin的<em>水平值</em>设为auto即可。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">　　div#container &#123;</span><br><span class="line">　　　　width:760px;</span><br><span class="line">　　　　margin:0 auto;</span><br><span class="line">　　&#125;</span><br></pre></td></tr></table></figure>
 
-<ol start="3">
-<li>文字的垂直居中</li>
-</ol>
-<p>单行文字的垂直居中，只要将<em>行高与容器高</em>设为<em>相等</em>即可。<br>比如，容器中有一行数字。</p>
+<h2 id="3-文字的垂直居中"><a href="#3-文字的垂直居中" class="headerlink" title="3. 文字的垂直居中"></a>3. 文字的垂直居中</h2><p>单行文字的垂直居中，只要将<em>行高与容器高</em>设为<em>相等</em>即可。<br>比如，容器中有一行数字。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">　　&lt;div id=&quot;container&quot;&gt;1234567890&lt;/div&gt;</span><br></pre></td></tr></table></figure>
 
 <p>然后CSS这样写：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">　　div#container &#123;height: 35px; line-height: 35px;&#125;</span><br></pre></td></tr></table></figure>
 
 <p>如果有n行文字，那么将行高设为容器高度的n分之一即可。</p>
-<ol start="4">
-<li>容器的垂直居中</li>
-</ol>
-<p>比如，有一大一小两个容器，请问如何将小容器垂直居中？</p>
+<h2 id="4-容器的垂直居中"><a href="#4-容器的垂直居中" class="headerlink" title="4. 容器的垂直居中"></a>4. 容器的垂直居中</h2><p>比如，有一大一小两个容器，请问如何将小容器垂直居中？</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">　　&lt;div id=&quot;big&quot;&gt;</span><br><span class="line">　　　　&lt;div id=&quot;small&quot;&gt;</span><br><span class="line">　　　　&lt;/div&gt;</span><br><span class="line">　　&lt;/div&gt;</span><br></pre></td></tr></table></figure>
 
 <p>首先，将大容器的定位为<code>relative。</code></p>
